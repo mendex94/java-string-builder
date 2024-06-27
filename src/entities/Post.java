@@ -1,11 +1,14 @@
 package entities;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 public class Post {
-    private Date moment;
+    private Instant moment;
     private String title;
     private String content;
     private Integer likes;
@@ -15,18 +18,18 @@ public class Post {
     public Post() {
     }
 
-    public Post(Date moment, String title, String content, Integer likes) {
+    public Post(Instant moment, String title, String content, Integer likes) {
         this.moment = moment;
         this.title = title;
         this.content = content;
         this.likes = likes;
     }
 
-    public Date getMoment() {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment(Date moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 
@@ -64,10 +67,12 @@ public class Post {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+
         sb.append(title).append("\n");
         sb.append(likes);
         sb.append(" Likes - ");
-        sb.append(moment).append("\n");
+        sb.append(dtf.format(moment)).append("\n");
         sb.append(content).append("\n");
         sb.append("Comments:\n");
         for (Comment c : comments) {
